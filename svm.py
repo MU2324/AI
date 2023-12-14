@@ -1,27 +1,41 @@
 #SVM
 
 import matplotlib.pyplot as plt
-from sklearn.svm import SVC
+from sklearn import datasets
+from sklearn import svm
 from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
-# Load your dataset from a local file (e.g., CSV)
-# Replace 'your_dataset.csv' with the actual path to your dataset file
-iris = load_iris()
+# Load the iris dataset as an example
+iris = datasets.load_digits()
 X = iris.data
 y = iris.target
-# Split the dataset into a training set and a testing set
+
+print(X)
+print("========================")
+print(y)
+
+# Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Create an SVM classifier
-svm_classifier = SVC(kernel='linear')  # You can choose different kernels here
+cls = svm.SVC(kernel="linear")
+X_train,y_train =iris.data[:-10],iris.target[:-10]
 
-# Fit the classifier to the training data
-svm_classifier.fit(X_train, y_train)
+# Train the classifier on the training data
+cls.fit(X_train, y_train)
 
-# Make predictions on the test data
-y_pred = svm_classifier.predict(X_test)
+# Make predictions on the testing data
+y_pred = cls.predict(X_test)
 
-# Calculate the accuracy of the model
+print(cls.predict(iris.data[:-10]))
+
+# Evaluate the accuracy of the classifier
+
 accuracy = accuracy_score(y_test, y_pred)
 print(f"Accuracy: {accuracy}")
+
+plt.imshow(iris.images[9], interpolation='nearest')
+plt.show()
+
